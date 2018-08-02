@@ -1,3 +1,5 @@
+//----------- v0.9.1 -------------//
+
 //----------- LIBS -------------//
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
@@ -10,11 +12,11 @@
 #define BTN_D 5
 #define BTN_L 4
 #define PUMP 7
-#define LED_TEST 6
+//#define LED_TEST 6
 
 //----------- IKONE -------------//
 const unsigned char settings_bitMap [] PROGMEM = {
-  // 'settings_icon, 32x32px
+  // settings_icon, 32x32px
   0x00, 0x00, 0x04, 0x20, 0x00, 0x00, 0x0e, 0x70, 0x00, 0x00, 0x0f, 0xf0, 0x00, 0x00, 0x0f, 0xf0, 
   0x00, 0x00, 0x7f, 0xfe, 0x00, 0x00, 0x7e, 0x7f, 0x00, 0x00, 0x7c, 0x3e, 0x00, 0x00, 0x38, 0x1c, 
   0x00, 0x00, 0x38, 0x1c, 0x00, 0x00, 0x7c, 0x3e, 0x00, 0x00, 0x7e, 0x7f, 0x00, 0x70, 0x7f, 0xfe, 
@@ -26,7 +28,7 @@ const unsigned char settings_bitMap [] PROGMEM = {
 };
 
 const unsigned char moisture_bitMap [] PROGMEM = {
-  // 'moisture_icon, 32x32px
+  // moisture_icon, 32x32px
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x38, 0x00, 0x30, 
   0x03, 0xe3, 0x00, 0x30, 0x03, 0xea, 0xb0, 0x78, 0x0f, 0xdf, 0xf0, 0xf8, 0x0d, 0xff, 0xf8, 0xfc, 
   0x0f, 0xf9, 0xac, 0xf8, 0x07, 0x3f, 0xf0, 0x78, 0x03, 0xf1, 0xf8, 0x30, 0x00, 0xd3, 0xb0, 0x00, 
@@ -38,7 +40,7 @@ const unsigned char moisture_bitMap [] PROGMEM = {
 };
 
 const unsigned char clock_bitMap [] PROGMEM = {
-  // 'clock_icon, 32x32px
+  // clock_icon, 32x32px
   0x00, 0x07, 0xe0, 0x00, 0x00, 0x3f, 0xfc, 0x00, 0x00, 0xff, 0xff, 0x00, 0x03, 0xff, 0xff, 0xc0, 
   0x07, 0xe1, 0x87, 0xe0, 0x0f, 0x80, 0x01, 0xf0, 0x1f, 0x00, 0x00, 0xf8, 0x1e, 0x01, 0x80, 0x78, 
   0x3c, 0x01, 0x80, 0x3c, 0x38, 0x01, 0x80, 0x1e, 0x78, 0x01, 0x80, 0x1e, 0x70, 0x01, 0x80, 0x0e, 
@@ -50,7 +52,7 @@ const unsigned char clock_bitMap [] PROGMEM = {
 };
 
 const unsigned char menu_bitMap [] PROGMEM = {
-  // 'menu_icon, 32x32px
+  // menu_icon, 32x32px
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
   0x00, 0x07, 0xe0, 0x00, 0x00, 0x3f, 0xfc, 0x00, 0x00, 0x70, 0x0e, 0x00, 0x00, 0xc0, 0x03, 0x00, 
   0x01, 0x80, 0x01, 0x80, 0x03, 0x00, 0x00, 0xc0, 0x06, 0x00, 0x00, 0x60, 0x06, 0x1f, 0xf8, 0x60, 
@@ -62,6 +64,7 @@ const unsigned char menu_bitMap [] PROGMEM = {
 };
 
 const unsigned char kos_bitMap [] PROGMEM = {
+  // kos_icon, 128x64px
   0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 
   0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x3f, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 
   0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x3f, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 
@@ -129,7 +132,7 @@ const unsigned char kos_bitMap [] PROGMEM = {
 };
 
 const unsigned char water_bitMap [] PROGMEM = {
-  // 'water_icon, 32x32px
+  // water_icon, 32x32px
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x80, 0x00, 
   0x00, 0x01, 0x80, 0x00, 0x00, 0x03, 0x80, 0x00, 0x00, 0x03, 0xc0, 0x00, 0x00, 0x07, 0xe0, 0x00, 
@@ -141,7 +144,7 @@ const unsigned char water_bitMap [] PROGMEM = {
 };
 
 const unsigned char temp_bitMap [] PROGMEM = {
-  // 'temp_icon, 32x32px
+  // temp_icon, 32x32px
   0x00, 0x38, 0x00, 0x00, 0x00, 0x7c, 0x00, 0x00, 0x00, 0xfe, 0x00, 0x00, 0x00, 0xfe, 0x00, 0x00, 
   0x00, 0xfe, 0x00, 0x00, 0x3c, 0xfe, 0x00, 0x00, 0x3c, 0xfe, 0x00, 0x00, 0x00, 0xfe, 0x00, 0x00, 
   0x0e, 0xfe, 0x00, 0x00, 0x00, 0xfe, 0x0e, 0x08, 0x00, 0xfe, 0x3f, 0x1c, 0x0e, 0xfe, 0x20, 0x96, 
@@ -153,7 +156,7 @@ const unsigned char temp_bitMap [] PROGMEM = {
 };
 
 const unsigned char alarm_bitMap [] PROGMEM = {
-  // 'alarm_iconpng, 32x32px
+  // alarm_icon, 32x32px
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03, 0xc0, 0x00, 0x00, 0x06, 0x60, 0x00, 
   0x00, 0x06, 0x60, 0x00, 0x00, 0x07, 0xe0, 0x00, 0x00, 0x0f, 0xf0, 0x00, 0x18, 0x1f, 0xf8, 0x18, 
   0x30, 0x3f, 0xfc, 0x0c, 0x64, 0x7f, 0xfe, 0x26, 0x6c, 0x7f, 0xfe, 0x36, 0xd8, 0x7f, 0xfe, 0x1b, 
@@ -173,19 +176,23 @@ float alpha = 7.88 / 1000;
 float beta = 1.937 / 10000;
 float KayTee(0.0);
 float AcT(0.0);
-float resistor_1 = 2430.0;
+float resistor_1 = 2460.0;
 float avg(0);
-int samples(20);
+byte samples(20);
 int max_vlaga(150);
 int min_vlaga(650);
-int ura(6);
-int minuta(0);
+byte ura(6);
+byte minuta(0);
 int btn_wait(250);
-int vlaznost_alarm(50);
-int h(13);
-int m(30);
+byte vlaznost_alarm(50);
+byte h(13);
+byte m(30);
 unsigned long s(0);
-int pump_on(4000);
+word pump_on(4000);
+byte pos(0);
+unsigned long start_time(0);
+unsigned long end_time(0);
+unsigned long pump_start(0);
 bool on_clock(false);
 bool moist_on(false);
 bool alarm_off(false);
@@ -200,9 +207,9 @@ void setup() {
   pinMode(BTN_L, INPUT_PULLUP);
   pinMode(BTN_D, INPUT_PULLUP);
   pinMode(PUMP, OUTPUT);
-  pinMode(LED_TEST, OUTPUT);
+  //pinMode(LED_TEST, OUTPUT);
   digitalWrite(PUMP, HIGH);
-  digitalWrite(LED_TEST, LOW);
+  //digitalWrite(LED_TEST, LOW);
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
   delay(1000);
   display.clearDisplay();
@@ -227,7 +234,7 @@ void Kalibracija() {
   delay(btn_wait);
   while(digitalRead(BTN_D)) {}
   int avg(0);
-  for(int i(0); i<samples; i++) {
+  for(byte i(0); i<samples; i++) {
     min_vlaga = analogRead(VLAGA_SENZOR);
     avg += min_vlaga;
   }
@@ -241,7 +248,7 @@ void Kalibracija() {
   delay(btn_wait);
   while(digitalRead(BTN_D)) {}
   avg = 0;
-  for(int i(0); i<samples; i++) {
+  for(byte i(0); i<samples; i++) {
     max_vlaga = analogRead(VLAGA_SENZOR);
     avg += max_vlaga;
   }
@@ -252,14 +259,14 @@ void Kalibracija() {
 //----------- SENZORJI -------------//
 void ReadSensor() {
   avg = 0;
-  for (int i(0); i < samples; i++) {
+  for (byte i(0); i < samples; i++) {
     temp_value = analogRead(TEMP_SENZOR);
     avg += temp_value;
     delay(1);
   }
   temp_value = avg / samples;
   avg = 0;
-  for (int i(0); i < samples; i++) {
+  for (byte i(0); i < samples; i++) {
     vlaga_value = analogRead(VLAGA_SENZOR);
     avg += vlaga_value;
     delay(1);
@@ -282,34 +289,52 @@ void Btn_up() {
 
 //----------- OSNOVNI EKRAN -------------//
 void PrintOLED() {
+  display.setFont(&FreeMono9pt7b);
+  display.setTextSize(0);
   display.clearDisplay();
   display.drawBitmap(4,0,temp_bitMap,32,32,WHITE);
   display.setCursor(35,20);
-  display.print(int(AcT), 1);
-  display.drawBitmap(0,32,water_bitMap,32,32,WHITE);
-  display.setCursor(30,50);
-  display.print(int(vlaga_value), 1);
+  display.print(byte(AcT), 1);
+  display.drawBitmap(0,29,water_bitMap,32,32,WHITE);
+  display.setCursor(30,48);
+  display.print(byte(vlaga_value), 1);
   display.print("%");
   display.drawLine(70,0,70,70,1);
-  display.drawBitmap(85,0,clock_bitMap,32,32,WHITE);
-  int pos(85);
+  display.drawBitmap(85,2,clock_bitMap,32,32,WHITE);
+  pos = 85;
   if(h >= 10) {
     pos = 75;
-  } else {
-    pos = 85;
   }
-  display.setCursor(pos,45);
+  display.setCursor(pos,48);
   display.print(h);
-  display.print(":");
-  display.print(m);
-  if(int(s/1000) >= 10) {
-    pos = 90;
+  if(byte(s/1000)%2 == 0) {
+    display.print(":");
   } else {
-    pos = 95;
+    display.print(" ");
   }
-  display.setCursor(pos, 60);
-  display.print(int(s/1000));
+  display.print(m);
+  display.setFont();
+  display.setTextSize(1);
+  pos = 94;
+  if(ura >= 10) {
+    pos = 88;
+  }
+  display.setCursor(pos,55);
+  display.print(ura);
+  display.print(":");
+  display.print(minuta);
+  if(on_clock) {
+    display.print("<");
+  }
+  display.setCursor(33,55);
+  display.print(vlaznost_alarm);
+  display.print("%");
+  if(moist_on) {
+    display.print("<");
+  }
   display.display();
+  display.setFont(&FreeMono9pt7b);
+  display.setTextSize(0);
 }
 
 //----------- MENI OLED -------------//
@@ -370,13 +395,10 @@ void Menu() {
 //----------- ALARM -------------//
 void Alarm() {
   btn_pressed = false;
-  int pos(50);
+  pos = 50;
   bool break_loop(false);
   if(ura >= 10) {
     pos = 40;
-  }
-  if(ura < 10) {
-    pos = 50;
   }
   display.clearDisplay();
   display.drawBitmap(50,0,alarm_bitMap,32,32,WHITE);
@@ -440,6 +462,12 @@ void Alarm() {
           } else {
             ura++;
           }
+          if(ura >= 10) {
+            pos = 29;
+          }
+          if(ura < 10) {
+            pos = 39;
+          }
           display.clearDisplay();
           display.drawBitmap(50,0,alarm_bitMap,32,32,WHITE);
           display.setCursor(pos, 50);
@@ -462,6 +490,12 @@ void Alarm() {
             minuta = 0;
           } else {
             minuta++;
+          }
+          if(ura >= 10) {
+            pos = 29;
+          }
+          if(ura < 10) {
+            pos = 39;
           }
           display.clearDisplay();
           display.drawBitmap(50,0,alarm_bitMap,32,32,WHITE);
@@ -576,13 +610,10 @@ void Alarm() {
 //----------- VLAZNOST -------------//
 void Vlaznost() {
   btn_pressed = false;
-  int pos(45);
+  pos = 50;
   bool break_loop(false);
   if(vlaznost_alarm < 10) {
     pos = 60;
-  }
-  else {
-    pos = 50;
   }
   display.clearDisplay();
   display.drawBitmap(48,0,moisture_bitMap,32,32,WHITE);
@@ -666,6 +697,12 @@ void Vlaznost() {
           } else {
             vlaznost_alarm++;
           }
+          if(vlaznost_alarm < 10) {
+            pos = 44;
+          }
+          else {
+            pos = 39;
+          }
           display.clearDisplay();
           display.drawBitmap(48,0,moisture_bitMap,32,32,WHITE);
           display.setCursor(pos, 50);
@@ -690,6 +727,12 @@ void Vlaznost() {
           }
           else {
             pos = 50;
+          }
+          if(vlaznost_alarm < 10) {
+            pos = 44;
+          }
+          else {
+            pos = 39;
           }
           display.clearDisplay();
           display.drawBitmap(48,0,moisture_bitMap,32,32,WHITE);
@@ -1142,11 +1185,10 @@ void Nastavitve() {
 }
 
 //----------- URA -------------//
-void Clock_now(unsigned long sub_time) {
-  s += sub_time;
+void Clock_now() {
+  s += (end_time - start_time);
   if(s >= 60000) {
-    long tmp = s - 60000;
-    s = tmp;
+    s -= 60000;
     m++;
   }
   if(m >= 60) {
@@ -1160,52 +1202,38 @@ void Clock_now(unsigned long sub_time) {
 
 //----------- SERIAL -------------//
 void PrintSerial() {
-  for (int i(0); i < 30; i++) {
+  for (byte i(0); i < 30; i++) {
     Serial.println("");
   }
 }
 
 //----------- LOOP -------------//
 void loop() {
-  unsigned long start_time = millis();
-  if(m > minuta && on_clock) {
-    alarm_off = false;
-  }
-  if(vlaga_value < vlaznost_alarm && moist_on) {
-    alarm_off = false;
-  }
   ReadSensor();
   PrintOLED();
   //PrintSerial();
   if(!(digitalRead(BTN_L)) && !(digitalRead(BTN_D))) {
-    unsigned long menu_start = millis();
     Menu();
     PrintOLED();
     btn_pressed = false;
     Btn_up();
-    unsigned long menu_end = millis();
-    unsigned long sum_time = menu_end - menu_start;
-    s += sum_time;
   }
-  if(ura == h && minuta == m && on_clock && !alarm_off) {
+  if((ura == h && minuta == m && on_clock && !alarm_off) || ((vlaznost_alarm > vlaga_value) && moist_on && !alarm_off)) {
     digitalWrite(PUMP, LOW);
+    pump_start = end_time;
     //digitalWrite(LED_TEST, HIGH);
-    delay(pump_on);
-    digitalWrite(PUMP, HIGH);
-    //digitalWrite(LED_TEST, LOW);
-    s += pump_on;
     alarm_off = true;
   }
-  if((vlaznost_alarm > vlaga_value) && moist_on && !alarm_off) {
-    digitalWrite(PUMP, LOW);
-    //digitalWrite(LED_TEST, HIGH);
-    delay(pump_on);
+  if(((end_time - pump_start) >= pump_on) && alarm_off) {
     digitalWrite(PUMP, HIGH);
     //digitalWrite(LED_TEST, LOW);
-    s += pump_on;
-    alarm_off = true;
   }
-  unsigned long end_time = millis();
-  unsigned long sub_time = end_time - start_time;
-  Clock_now(sub_time);
+  if((end_time - pump_start) >= 60050) {
+    alarm_off = false;
+  }
+  if(end_time - start_time >= 1000) {
+    Clock_now();
+    start_time = end_time;
+  }
+  end_time = millis();
 }
