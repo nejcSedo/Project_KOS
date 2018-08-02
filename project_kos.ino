@@ -1,4 +1,4 @@
-//----------- v0.9.1 -------------//
+//----------- v0.9.2 -------------//
 
 //----------- LIBS -------------//
 #include <Adafruit_GFX.h>
@@ -168,35 +168,34 @@ const unsigned char alarm_bitMap [] PROGMEM = {
 };
 
 //----------- VARS -------------//
-float temp_value(0.0);
-float vlaga_value(0.0);
-float Rkty(0.0);
-float R25 = 2000.0;
-float alpha = 7.88 / 1000;
-float beta = 1.937 / 10000;
-float KayTee(0.0);
-float AcT(0.0);
-float resistor_1 = 2460.0;
-float avg(0);
-byte samples(20);
-int max_vlaga(150);
-int min_vlaga(650);
-byte ura(6);
-byte minuta(0);
-int btn_wait(250);
-byte vlaznost_alarm(50);
-byte h(13);
-byte m(30);
 unsigned long s(0);
-word pump_on(4000);
-byte pos(0);
 unsigned long start_time(0);
 unsigned long end_time(0);
 unsigned long pump_start(0);
+float temp_value(0.0);
+float vlaga_value(0.0);
+float Rkty(0.0);
+float R25(2000.0);
+float alpha(7.88 / 1000);
+float beta(1.937 / 10000);
+float KayTee(0.0);
+float AcT(0.0);
+float resistor_1(2460.0);
+float avg(0);
+int max_vlaga(150);
+int min_vlaga(650);
+int btn_wait(250);
+int pump_on(4000);
+byte ura(6);
+byte minuta(0);
+byte samples(20);
+byte vlaznost_alarm(50);
+byte h(13);
+byte m(30);
+byte pos(0);
 bool on_clock(false);
 bool moist_on(false);
 bool alarm_off(false);
-bool exit_menu(false);
 bool btn_pressed(false);
 
 Adafruit_SSD1306 display;
@@ -229,7 +228,7 @@ void Kalibracija() {
   display.clearDisplay();
   display.println("Suh senzor.");
   display.println("Pritisni desno tipko");
-  display.println("za kalibracijo!");
+  display.println("za kalibracijo ->");
   display.display();
   delay(btn_wait);
   while(digitalRead(BTN_D)) {}
@@ -294,16 +293,17 @@ void PrintOLED() {
   display.clearDisplay();
   display.drawBitmap(4,0,temp_bitMap,32,32,WHITE);
   display.setCursor(35,20);
-  display.print(byte(AcT), 1);
-  display.drawBitmap(0,29,water_bitMap,32,32,WHITE);
+  display.print(byte(AcT));
+  display.drawBitmap(0,34,water_bitMap,32,32,WHITE);
   display.setCursor(30,48);
-  display.print(byte(vlaga_value), 1);
+  display.print(byte(vlaga_value));
   display.print("%");
   display.drawLine(70,0,70,70,1);
   display.drawBitmap(85,2,clock_bitMap,32,32,WHITE);
-  pos = 85;
   if(h >= 10) {
     pos = 75;
+  } else {
+    pos = 85;
   }
   display.setCursor(pos,48);
   display.print(h);
@@ -315,22 +315,23 @@ void PrintOLED() {
   display.print(m);
   display.setFont();
   display.setTextSize(1);
-  pos = 94;
   if(ura >= 10) {
     pos = 88;
+  } else {
+    pos = 94;
   }
   display.setCursor(pos,55);
   display.print(ura);
   display.print(":");
   display.print(minuta);
   if(on_clock) {
-    display.print("<");
+    display.print("*");
   }
   display.setCursor(33,55);
   display.print(vlaznost_alarm);
   display.print("%");
   if(moist_on) {
-    display.print("<");
+    display.print("*");
   }
   display.display();
   display.setFont(&FreeMono9pt7b);
@@ -352,10 +353,10 @@ void Menu_OLED() {
 
 //----------- MENI -------------//
 void Menu() {
-  exit_menu = false;
   btn_pressed = false;
   Menu_OLED();
   Btn_up();
+  bool exit_menu(false);
   while(!exit_menu) {
     delay(btn_wait);
     if((!digitalRead(BTN_L)) && digitalRead(BTN_D)) {
@@ -395,10 +396,11 @@ void Menu() {
 //----------- ALARM -------------//
 void Alarm() {
   btn_pressed = false;
-  pos = 50;
   bool break_loop(false);
   if(ura >= 10) {
     pos = 40;
+  } else {
+    pos = 50;
   }
   display.clearDisplay();
   display.drawBitmap(50,0,alarm_bitMap,32,32,WHITE);
@@ -433,8 +435,7 @@ void Alarm() {
       btn_pressed = false;
       if(ura >= 10) {
         pos = 29;
-      }
-      if(ura < 10) {
+      } else {
         pos = 39;
       }
       display.clearDisplay();
@@ -464,8 +465,7 @@ void Alarm() {
           }
           if(ura >= 10) {
             pos = 29;
-          }
-          if(ura < 10) {
+          } else {
             pos = 39;
           }
           display.clearDisplay();
@@ -493,8 +493,7 @@ void Alarm() {
           }
           if(ura >= 10) {
             pos = 29;
-          }
-          if(ura < 10) {
+          } else {
             pos = 39;
           }
           display.clearDisplay();
@@ -518,8 +517,7 @@ void Alarm() {
           btn_pressed = false;
           if(ura >= 10) {
             pos = 40;
-          }
-          if(ura < 10) {
+          } else {
             pos = 50;
           }
           display.clearDisplay();
@@ -610,9 +608,10 @@ void Alarm() {
 //----------- VLAZNOST -------------//
 void Vlaznost() {
   btn_pressed = false;
-  pos = 50;
   bool break_loop(false);
-  if(vlaznost_alarm < 10) {
+  if(vlaznost_alarm >= 10) {
+    pos = 50;
+  } else {
     pos = 60;
   }
   display.clearDisplay();
@@ -645,11 +644,10 @@ void Vlaznost() {
     }
     else if(!(digitalRead(BTN_L)) && !(digitalRead(BTN_D))) {
       btn_pressed = false;
-      if(vlaznost_alarm < 10) {
-        pos = 44;
-      }
-      else {
+      if(vlaznost_alarm >= 10) {
         pos = 39;
+      } else {
+        pos = 44;
       }
       display.clearDisplay();
       display.drawBitmap(48,0,moisture_bitMap,32,32,WHITE);
@@ -697,11 +695,10 @@ void Vlaznost() {
           } else {
             vlaznost_alarm++;
           }
-          if(vlaznost_alarm < 10) {
-            pos = 44;
-          }
-          else {
+          if(vlaznost_alarm >= 10) {
             pos = 39;
+          } else {
+            pos = 44;
           }
           display.clearDisplay();
           display.drawBitmap(48,0,moisture_bitMap,32,32,WHITE);
@@ -722,17 +719,10 @@ void Vlaznost() {
         else if(!(digitalRead(BTN_L)) && !(digitalRead(BTN_D))) {
           btn_pressed = false;
           display.clearDisplay();
-          if(vlaznost_alarm < 10) {
-            pos = 60;
-          }
-          else {
-            pos = 50;
-          }
-          if(vlaznost_alarm < 10) {
-            pos = 44;
-          }
-          else {
+          if(vlaznost_alarm >= 10) {
             pos = 39;
+          } else {
+            pos = 44;
           }
           display.clearDisplay();
           display.drawBitmap(48,0,moisture_bitMap,32,32,WHITE);
@@ -751,11 +741,10 @@ void Vlaznost() {
           while(true) {
             delay(btn_wait);
             if((!digitalRead(BTN_L)) && digitalRead(BTN_D)) {
-              if(vlaznost_alarm < 10) {
-                pos = 60;
-              }
-              else {
+              if(vlaznost_alarm >= 10) {
                 pos = 50;
+              } else {
+                pos = 60;
               }
               display.clearDisplay();
               display.drawBitmap(48,0,moisture_bitMap,32,32,WHITE);
@@ -774,11 +763,10 @@ void Vlaznost() {
             }
             else if((!digitalRead(BTN_D)) && digitalRead(BTN_L)) {
               display.clearDisplay();
-              if(vlaznost_alarm < 10) {
-                pos = 60;
-              }
-              else {
+              if(vlaznost_alarm >= 10) {
                 pos = 50;
+              } else {
+                pos = 60;
               }
               display.clearDisplay();
               display.drawBitmap(48,0,moisture_bitMap,32,32,WHITE);
@@ -798,11 +786,10 @@ void Vlaznost() {
             else if(!(digitalRead(BTN_L)) && !(digitalRead(BTN_D))) {
               break_loop = true;
               btn_pressed = false;
-              if(vlaznost_alarm < 10) {
-                pos = 60;
-              }
-              else {
+              if(vlaznost_alarm >= 10) {
                 pos = 50;
+              } else {
+                pos = 60;
               }
               display.clearDisplay();
               display.drawBitmap(48,0,moisture_bitMap,32,32,WHITE);
@@ -1236,4 +1223,8 @@ void loop() {
     start_time = end_time;
   }
   end_time = millis();
+  if(end_time < start_time) {
+    s = sizeof(unsigned long) - start_time;
+    start_time = 0;
+  }
 }
