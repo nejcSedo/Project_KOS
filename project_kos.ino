@@ -1,4 +1,4 @@
-//----------- v0.9.2 -------------//
+//----------- v0.9.3 -------------//
 
 //----------- LIBS -------------//
 #include <Adafruit_GFX.h>
@@ -188,10 +188,10 @@ int btn_wait(250);
 int pump_on(4000);
 byte ura(6);
 byte minuta(0);
-byte samples(20);
-byte vlaznost_alarm(50);
-byte h(13);
-byte m(30);
+byte samples(30);
+byte vlaznost_alarm(30);
+byte h(18);
+byte m(15);
 byte pos(0);
 bool on_clock(false);
 bool moist_on(false);
@@ -230,9 +230,9 @@ void Kalibracija() {
   display.println("Pritisni desno tipko");
   display.println("za kalibracijo ->");
   display.display();
-  delay(btn_wait);
+  while(!digitalRead(BTN_D) || !digitalRead(BTN_L)) {}
   while(digitalRead(BTN_D)) {}
-  int avg(0);
+  avg = 0;
   for(byte i(0); i<samples; i++) {
     min_vlaga = analogRead(VLAGA_SENZOR);
     avg += min_vlaga;
@@ -244,7 +244,7 @@ void Kalibracija() {
   display.println("Pritisni desno");
   display.println("tipko za kalibracijo!");
   display.display();
-  delay(btn_wait);
+  while(!digitalRead(BTN_D) || !digitalRead(BTN_L)) {}
   while(digitalRead(BTN_D)) {}
   avg = 0;
   for(byte i(0); i<samples; i++) {
@@ -252,7 +252,6 @@ void Kalibracija() {
     avg += max_vlaga;
   }
   max_vlaga = avg / samples;
-  delay(btn_wait);
 }
 
 //----------- SENZORJI -------------//
@@ -288,8 +287,6 @@ void Btn_up() {
 
 //----------- OSNOVNI EKRAN -------------//
 void PrintOLED() {
-  display.setFont(&FreeMono9pt7b);
-  display.setTextSize(0);
   display.clearDisplay();
   display.drawBitmap(4,0,temp_bitMap,32,32,WHITE);
   display.setCursor(35,20);
@@ -974,8 +971,8 @@ void Nastavitve() {
                   while(true) {
                     delay(btn_wait);
                     if((!digitalRead(BTN_D)) && digitalRead(BTN_L)) {
-                      if(pump_on >= 10000) {
-                        pump_on = 10000;
+                      if(pump_on >= 20000) {
+                        pump_on = 20000;
                       } else {
                         pump_on += 1000;
                       }
@@ -1188,11 +1185,13 @@ void Clock_now() {
 }
 
 //----------- SERIAL -------------//
+/*
 void PrintSerial() {
   for (byte i(0); i < 30; i++) {
     Serial.println("");
   }
 }
+*/
 
 //----------- LOOP -------------//
 void loop() {
@@ -1215,7 +1214,7 @@ void loop() {
     digitalWrite(PUMP, HIGH);
     //digitalWrite(LED_TEST, LOW);
   }
-  if((end_time - pump_start) >= 60050) {
+  if((end_time - pump_start) >= 60000) {
     alarm_off = false;
   }
   if(end_time - start_time >= 1000) {
