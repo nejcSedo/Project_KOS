@@ -1,4 +1,4 @@
 # Project_KOS
 Project Kos&amp;Co.
 
-Ver. 0.9999
+Ver. 0.9.3
